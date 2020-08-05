@@ -1,7 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios'
+import Card from './components/Card'
+import CardList from './components/CardList'
+
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
 
 class App extends React.Component {
   constructor() {
@@ -14,6 +17,7 @@ class App extends React.Component {
   componentDidMount() {
     axios.get(`https://api.github.com/users/loganmetzger`)
       .then(res  => {
+        console.log(res.data)
         this.setState({ gitFriends: res.data })
       })
       .catch(err => {
@@ -25,7 +29,9 @@ class App extends React.Component {
     return(
       <div>
         <h1>Git Frands</h1>
-        <CardList />
+        {this.state.gitFriends.map(item => {
+          return <Card info={this.state.gitFriends} />
+        })}
       </div>
     )
   }
